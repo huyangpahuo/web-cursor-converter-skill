@@ -1,0 +1,84 @@
+/**
+ * cursor-template.css — 自定义动画鼠标指针(静态兜底层)
+ *
+ * 配合 cursor-template.js + data.js 使用。两层设计:
+ *   1. 每条规则 var() 的第二参数是静态兜底(动画第 0 帧),JS 未加载也能显示光标;
+ *   2. cursor-template.js 按帧率往 :root 写 --cursor-<state> 变量实现逐帧动画。
+ *
+ * 使用前必改:
+ *   把下面所有 "/cursors/mypack/" 替换成你部署光标资源的站点路径,
+ *   并删掉 data.js 里没有的状态规则(多留无害,删掉更干净)。
+ *
+ * 注意:
+ *   - 全部 !important:站点各处散落的 cursor:pointer/default 都要被接管,
+ *     cursor 是纯装饰属性,不影响布局与交互;
+ *   - iframe(嵌入播放器等)内部无法接管,会显示系统指针,这是所有限制的共性;
+ *   - 触屏设备 JS 会直接不启用,这里的规则也无副作用。
+ */
+
+:root,
+html {
+  cursor: var(--cursor-normal, url("/cursors/mypack/normal/0.png") 0 0), auto !important;
+}
+
+/* 可点击元素:手指 */
+a,
+button,
+[role="button"],
+.btn,
+label,
+select,
+summary,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: var(--cursor-link, url("/cursors/mypack/link/0.png") 0 0), pointer !important;
+}
+
+/* 可编辑文本:I 形 */
+input[type="text"],
+input[type="search"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+textarea,
+[contenteditable="true"],
+[contenteditable=""] {
+  cursor: var(--cursor-text, url("/cursors/mypack/text/0.png") 6 16), text !important;
+}
+
+/* 等待 / 后台运行 / 不可用 / 帮助 / 移动 / 精确定位 */
+[aria-busy="true"] {
+  cursor: var(--cursor-busy, url("/cursors/mypack/busy/0.png") 1 1), wait !important;
+}
+[disabled],
+[aria-disabled="true"] {
+  cursor: var(--cursor-unavailable, url("/cursors/mypack/unavailable/0.png") 1 1), not-allowed !important;
+}
+[data-cursor="help"] {
+  cursor: var(--cursor-help, url("/cursors/mypack/help/0.png") 0 0), help !important;
+}
+[draggable="true"] {
+  cursor: var(--cursor-move, url("/cursors/mypack/move/0.png") 16 16), move !important;
+}
+[data-cursor="crosshair"] {
+  cursor: var(--cursor-crosshair, url("/cursors/mypack/crosshair/0.png") 6 6), crosshair !important;
+}
+
+/* 各方向调整大小 */
+.ew-resize, .col-resize {
+  cursor: var(--cursor-ew, url("/cursors/mypack/ew/0.png") 16 16), ew-resize !important;
+}
+.ns-resize, .row-resize {
+  cursor: var(--cursor-ns, url("/cursors/mypack/ns/0.png") 16 16), ns-resize !important;
+}
+.nwse-resize {
+  cursor: var(--cursor-nwse, url("/cursors/mypack/nwse/0.png") 16 16), nwse-resize !important;
+}
+.nesw-resize {
+  cursor: var(--cursor-nesw, url("/cursors/mypack/nesw/0.png") 16 16), nesw-resize !important;
+}
